@@ -1,0 +1,26 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.RollerConstants;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+public class CANRollerSubsystem extends SubsystemBase {
+  private final CANSparkMax rollerMotor;
+
+  public CANRollerSubsystem() {
+    rollerMotor = new CANSparkMax(RollerConstants.ROLLER_MOTOR_ID, MotorType.kBrushed);
+
+    rollerMotor.setCANTimeout(250);
+
+    rollerMotor.enableVoltageCompensation(RollerConstants.ROLLER_MOTOR_VOLTAGE_COMP);
+    rollerMotor.setSmartCurrentLimit(RollerConstants.ROLLER_MOTOR_CURRENT_LIMIT);
+  }
+
+  @Override
+  public void periodic() {}
+
+  public void runRoller(double forward, double reverse) {
+    rollerMotor.set(forward - reverse);
+  }
+}
